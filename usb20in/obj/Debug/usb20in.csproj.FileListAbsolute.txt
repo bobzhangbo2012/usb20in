@@ -1,0 +1,10 @@
+I:\prom\HG-SOFTGPS04-C\usb20in\usb20in\bin\Debug\usb20in.exe.config
+I:\prom\HG-SOFTGPS04-C\usb20in\usb20in\obj\Debug\usb20in.csprojResolveAssemblyReference.cache
+I:\prom\HG-SOFTGPS04-C\usb20in\usb20in\obj\Debug\usb20in.Properties.Resources.resources
+I:\prom\HG-SOFTGPS04-C\usb20in\usb20in\obj\Debug\usb20in.csproj.GenerateResource.Cache
+I:\prom\HG-SOFTGPS04-C\usb20in\usb20in\bin\Debug\usb20in.exe
+I:\prom\HG-SOFTGPS04-C\usb20in\usb20in\bin\Debug\usb20in.pdb
+I:\prom\HG-SOFTGPS04-C\usb20in\usb20in\obj\Debug\usb20in.exe
+I:\prom\HG-SOFTGPS04-C\usb20in\usb20in\obj\Debug\usb20in.pdb
+I:\prom\HG-SOFTGPS04-C\usb20in\usb20in\bin\Debug\CyUSB.dll
+I:\prom\HG-SOFTGPS04-C\usb20in\usb20in\obj\Debug\usb20in.Form1.resources
