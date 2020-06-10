@@ -145,3 +145,14 @@ D:\workspace\usb20in\usb20in\obj\x64\Release\usb20in.csproj.GenerateResource.cac
 D:\workspace\usb20in\usb20in\obj\x64\Release\usb20in.csproj.CopyComplete
 D:\workspace\usb20in\usb20in\obj\x64\Release\usb20in.exe
 D:\workspace\usb20in\usb20in\obj\x64\Release\usb20in.pdb
+F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\bin\x64\Release\usb20in.exe.config
+F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\bin\x64\Release\usb20in.exe
+F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\bin\x64\Release\usb20in.pdb
+F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\bin\x64\Release\CyUSB.dll
+F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\obj\x64\Release\usb20in.csprojAssemblyReference.cache
+F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\obj\x64\Release\usb20in.Form1.resources
+F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\obj\x64\Release\usb20in.Properties.Resources.resources
+F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\obj\x64\Release\usb20in.csproj.GenerateResource.cache
+F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\obj\x64\Release\usb20in.csproj.CopyComplete
+F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\obj\x64\Release\usb20in.exe
+F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\obj\x64\Release\usb20in.pdb

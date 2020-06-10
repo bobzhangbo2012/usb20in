@@ -126,7 +126,7 @@ namespace usb20in
             FileStream fw;
             if (comboBox3.Text.Contains("INT8") || comboBox3.Text == "RAWDATA")
 
-                fw = new FileStream("D:\\FastData\\IF_Test\\usbdata.bin", FileMode.Create);//C:\\MATLAB7\\work\\usbdata.bin//I:\\prom\\work\\
+                fw = new FileStream("E:\\FastData\\IF_Test\\usbdata_n.bin", FileMode.Create);//C:\\MATLAB7\\work\\usbdata.bin//I:\\prom\\work\\
             else
                 fw = new FileStream("E:\\data\\usbdataB3I_16M369X4_1.dat", FileMode.Create);
             BinaryWriter bw;
@@ -164,7 +164,7 @@ namespace usb20in
             BulkOut.XferData(ref buf, ref len);
             Thread.Sleep(100);
 
-            int[] flags = new int[] { 1, 1, 1, 1, 1, 1, 1,1 };
+            int[] flags = new int[] { 1, 1, 1, 1, 1, 1, 1, 1 };
 
             if (comboBox3.Text == "RAWDATA")
                 while (BulkIn != null && k++ < kmax && runflag == true)
@@ -180,23 +180,26 @@ namespace usb20in
                 //List<FileStream> fwt = new List<FileStream>();//创建了一个空列表
                 //List<string> fullpatht = new List<string>();//创建了一个空列表
 
-                BinaryWriter[] bwt = new BinaryWriter[8];//创建了一个空列表
-                FileStream[] fwt = new FileStream[8];//创建了一个空列表
-                string[] fullpatht = new string[8];//创建了一个空列表
+                BinaryWriter[] bwt = new BinaryWriter[8];//创建了一个空数组
+                FileStream[] fwt = new FileStream[8];//创建了一个空数组
+                string[] fullpatht = new string[8];//创建了一个空数组
                 for (int i = 1; i <= 8; i++)
                 {
-                    string path = "D:\\FastData\\IF_Test\\";
-                    string name = "usbdata" + Convert.ToString(i) + ".bin";
-                    fullpatht[i-1] = path + name; //保存文件完整路径
-                    fwt[i-1] = new FileStream(fullpatht[i-1], FileMode.Create);
-                    bwt[i-1] = new BinaryWriter(fwt[i-1]);
+                    if (flags[i - 1] == 1)
+                    {
+                        string path = "E:\\FastData\\IF_Test\\";
+                        string name = "usbdata" + Convert.ToString(i) + ".bin";
+                        fullpatht[i - 1] = path + name; //保存文件完整路径
+                        fwt[i - 1] = new FileStream(fullpatht[i - 1], FileMode.Create);
+                        bwt[i - 1] = new BinaryWriter(fwt[i - 1]);
+                    }
                 }
 
 
                 while (BulkIn != null && k++ < kmax && runflag == true)
                 {
                     BulkIn.XferData(ref buf, ref len);
-                    //bw.Write(buf, 0, len);
+                    bw.Write(buf, 0, len);
                     //if ((k % (kmax / 100)) == 0) progressBar1.Value = k;
 
                     for (int i = 1; i <= 8; i++)
@@ -213,13 +216,13 @@ namespace usb20in
                                     for (int j = 0; j < length; j++)
                                     {
                                         bufin[j * 8] = IF2BIT[(buf[j * 16] >> 2) & 0x03];
-                                        bufin[j * 8 + 1] = IF2BIT[(buf[j * 16 + 4] >> 2) & 0x03];
-                                        bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 8] >> 2) & 0x03];
-                                        bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 12] >> 2) & 0x03];
+                                        bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 4] >> 2) & 0x03];
+                                        bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 8] >> 2) & 0x03];
+                                        bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 12] >> 2) & 0x03];
 
-                                        bufin[j * 8 + 4] = IF2BIT[(buf[j * 16] >> 0) & 0x03];
-                                        bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 4] >> 0) & 0x03];
-                                        bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 8] >> 0) & 0x03];
+                                        bufin[j * 8 + 1] = IF2BIT[(buf[j * 16] >> 0) & 0x03];
+                                        bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 4] >> 0) & 0x03];
+                                        bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 8] >> 0) & 0x03];
                                         bufin[j * 8 + 7] = IF2BIT[(buf[j * 16 + 12] >> 0) & 0x03];
                                     }
                                     bwt[i-1].Write(bufin, 0, length * 8);
@@ -231,13 +234,13 @@ namespace usb20in
                                     for (int j = 0; j < length; j++)
                                     {
                                         bufin[j * 8] = IF2BIT[(buf[j * 16] >> 2) & 0x03];
-                                        bufin[j * 8 + 1] = IF2BIT[(buf[j * 16 + 4] >> 2) & 0x03];
-                                        bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 8] >> 2) & 0x03];
-                                        bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 12] >> 2) & 0x03];
+                                        bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 4] >> 2) & 0x03];
+                                        bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 8] >> 2) & 0x03];
+                                        bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 12] >> 2) & 0x03];
 
-                                        bufin[j * 8 + 4] = IF2BIT[(buf[j * 16] >> 0) & 0x03];
-                                        bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 4] >> 0) & 0x03];
-                                        bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 8] >> 0) & 0x03];
+                                        bufin[j * 8 + 1] = IF2BIT[(buf[j * 16] >> 0) & 0x03];
+                                        bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 4] >> 0) & 0x03];
+                                        bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 8] >> 0) & 0x03];
                                         bufin[j * 8 + 7] = IF2BIT[(buf[j * 16 + 12] >> 0) & 0x03];
                                     }
                                     bwt[i-1].Write(bufin, 0, length * 8);
@@ -249,13 +252,13 @@ namespace usb20in
                                     for (int j = 0; j < length; j++)
                                     {
                                         bufin[j * 8] = IF2BIT[(buf[j * 16 + 1] >> 2) & 0x03];
-                                        bufin[j * 8 + 1] = IF2BIT[(buf[j * 16 + 5] >> 2) & 0x03];
-                                        bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 9] >> 2) & 0x03];
-                                        bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 13] >> 2) & 0x03];
+                                        bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 5] >> 2) & 0x03];
+                                        bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 9] >> 2) & 0x03];
+                                        bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 13] >> 2) & 0x03];
 
-                                        bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 1] >> 0) & 0x03];
-                                        bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 5] >> 0) & 0x03];
-                                        bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 9] >> 0) & 0x03];
+                                        bufin[j * 8 + 1] = IF2BIT[(buf[j * 16 + 1] >> 0) & 0x03];
+                                        bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 5] >> 0) & 0x03];
+                                        bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 9] >> 0) & 0x03];
                                         bufin[j * 8 + 7] = IF2BIT[(buf[j * 16 + 13] >> 0) & 0x03];
                                     }
                                     bwt[i-1].Write(bufin, 0, length * 8);
@@ -267,13 +270,13 @@ namespace usb20in
                                     for (int j = 0; j < length; j++)
                                     {
                                         bufin[j * 8] = IF2BIT[(buf[j * 16 + 1] >> 6) & 0x03];
-                                        bufin[j * 8 + 1] = IF2BIT[(buf[j * 16 + 5] >> 6) & 0x03];
-                                        bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 9] >> 6) & 0x03];
-                                        bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 13] >> 6) & 0x03];
+                                        bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 5] >> 6) & 0x03];
+                                        bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 9] >> 6) & 0x03];
+                                        bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 13] >> 6) & 0x03];
 
-                                        bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 1] >> 4) & 0x03];
-                                        bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 5] >> 4) & 0x03];
-                                        bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 9] >> 4) & 0x03];
+                                        bufin[j * 8 + 1] = IF2BIT[(buf[j * 16 + 1] >> 4) & 0x03];
+                                        bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 5] >> 4) & 0x03];
+                                        bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 9] >> 4) & 0x03];
                                         bufin[j * 8 + 7] = IF2BIT[(buf[j * 16 + 13] >> 4) & 0x03];
                                     }
                                     bwt[i-1].Write(bufin, 0, length * 8);
@@ -285,13 +288,13 @@ namespace usb20in
                                     for (int j = 0; j < length; j++)
                                     {
                                         bufin[j * 8] = IF2BIT[(buf[j * 16 + 2] >> 2) & 0x03];
-                                        bufin[j * 8 + 1] = IF2BIT[(buf[j * 16 + 6] >> 2) & 0x03];
-                                        bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 10] >> 2) & 0x03];
-                                        bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 14] >> 2) & 0x03];
+                                        bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 6] >> 2) & 0x03];
+                                        bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 10] >> 2) & 0x03];
+                                        bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 14] >> 2) & 0x03];
 
-                                        bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 2] >> 0) & 0x03];
-                                        bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 6] >> 0) & 0x03];
-                                        bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 10] >> 0) & 0x03];
+                                        bufin[j * 8 + 1] = IF2BIT[(buf[j * 16 + 2] >> 0) & 0x03];
+                                        bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 6] >> 0) & 0x03];
+                                        bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 10] >> 0) & 0x03];
                                         bufin[j * 8 + 7] = IF2BIT[(buf[j * 16 + 14] >> 0) & 0x03];
                                     }
                                     bwt[i-1].Write(bufin, 0, length * 8);
@@ -303,13 +306,13 @@ namespace usb20in
                                     for (int j = 0; j < length; j++)
                                     {
                                         bufin[j * 8] = IF2BIT[(buf[j * 16 + 2] >> 6) & 0x03];
-                                        bufin[j * 8 + 1] = IF2BIT[(buf[j * 16 + 6] >> 6) & 0x03];
-                                        bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 10] >> 6) & 0x03];
-                                        bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 14] >> 6) & 0x03];
+                                        bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 6] >> 6) & 0x03];
+                                        bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 10] >> 6) & 0x03];
+                                        bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 14] >> 6) & 0x03];
 
-                                        bufin[j * 8 + 4] = IF2BIT[(buf[j * 16] >> 4) & 0x03];
-                                        bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 4] >> 4) & 0x03];
-                                        bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 8] >> 4) & 0x03];
+                                        bufin[j * 8 + 1] = IF2BIT[(buf[j * 16] >> 4) & 0x03];
+                                        bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 4] >> 4) & 0x03];
+                                        bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 8] >> 4) & 0x03];
                                         bufin[j * 8 + 7] = IF2BIT[(buf[j * 16 + 12] >> 4) & 0x03];
                                     }
                                     bwt[i-1].Write(bufin, 0, length * 8);
@@ -321,13 +324,13 @@ namespace usb20in
                                     for (int j = 0; j < length; j++)
                                     {
                                         bufin[j * 8] = IF2BIT[(buf[j * 16 + 3] >> 2) & 0x03];
-                                        bufin[j * 8 + 1] = IF2BIT[(buf[j * 16 + 7] >> 2) & 0x03];
-                                        bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 11] >> 2) & 0x03];
-                                        bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 15] >> 2) & 0x03];
+                                        bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 7] >> 2) & 0x03];
+                                        bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 11] >> 2) & 0x03];
+                                        bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 15] >> 2) & 0x03];
 
-                                        bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 3] >> 0) & 0x03];
-                                        bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 7] >> 0) & 0x03];
-                                        bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 11] >> 0) & 0x03];
+                                        bufin[j * 8 + 1] = IF2BIT[(buf[j * 16 + 3] >> 0) & 0x03];
+                                        bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 7] >> 0) & 0x03];
+                                        bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 11] >> 0) & 0x03];
                                         bufin[j * 8 + 7] = IF2BIT[(buf[j * 16 + 15] >> 0) & 0x03];
                                     }
                                     bwt[i-1].Write(bufin, 0, length * 8);
@@ -339,13 +342,13 @@ namespace usb20in
                                     for (int j = 0; j < length; j++)
                                     {
                                         bufin[j * 8] = IF2BIT[(buf[j * 16 + 3] >> 6) & 0x03];
-                                        bufin[j * 8 + 1] = IF2BIT[(buf[j * 16 + 7] >> 6) & 0x03];
-                                        bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 11] >> 6) & 0x03];
-                                        bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 15] >> 6) & 0x03];
+                                        bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 7] >> 6) & 0x03];
+                                        bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 11] >> 6) & 0x03];
+                                        bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 15] >> 6) & 0x03];
 
-                                        bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 3] >> 4) & 0x03];
-                                        bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 7] >> 4) & 0x03];
-                                        bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 11] >> 4) & 0x03];
+                                        bufin[j * 8 + 1] = IF2BIT[(buf[j * 16 + 3] >> 4) & 0x03];
+                                        bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 7] >> 4) & 0x03];
+                                        bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 11] >> 4) & 0x03];
                                         bufin[j * 8 + 7] = IF2BIT[(buf[j * 16 + 15] >> 4) & 0x03];
                                     }
                                     bwt[i-1].Write(bufin, 0, length * 8);
@@ -367,8 +370,11 @@ namespace usb20in
 
                 for (int i = 1; i <= 8; i++)
                 {
-                    bwt[i-1].Close();
-                    fwt[i-1].Close();
+                    if (flags[i - 1] == 1)
+                    {
+                        bwt[i - 1].Close();
+                        fwt[i - 1].Close();
+                    }
                 }
             }
             else if (comboBox3.Text == "RF2IRF1I_BIT2")
@@ -1025,6 +1031,320 @@ namespace usb20in
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void groupBox5_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Control.CheckForIllegalCrossThreadCalls = false;
+            Thread thread = new Thread(ThreadFuntion_Convert);
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+   
+        private void ThreadFuntion_Convert()
+        {
+            runflag = true;
+            textBox1.Text = "";
+
+            
+            string filePath = "E:\\FastData\\IF_Test\\";
+            string fileName = "usbdata_D2";
+            string filePathName = filePath + fileName + ".bin"; //保存文件完整路径
+
+            FileStream fr;
+            fr = new FileStream(filePathName, FileMode.Open);
+            BinaryReader br;
+            br = new BinaryReader(fr);
+
+            FileInfo fileInfo = new FileInfo(filePathName);
+            int kmax = Convert.ToInt32(fileInfo.Length /4);
+
+
+            int k = 0;
+            bool savefileok = false;
+            progressBar2.Minimum = 0;
+            progressBar2.Maximum = kmax;
+
+
+            //int len = 0x40000; //总字节数
+            //byte[] buf = new byte[0x80000];
+            //byte[] bufin = new byte[0x80000];
+            ////len=1/4MB,对于80MB/s,大概为320
+            ////对于64MB/s,大概为大概为256
+            ////对于32MB/s，大概为128
+            ////对于40MB/s，大概为160
+
+            //定义数组用于查表
+            byte[] IF2BIT = { 0x1, 0x3, 0xff, 0xfd };
+            //byte[] IF3BIT = { 0x1,0x3,0x5,0x7,0xf9,0xfb,0xfd,0xff};//TWO’S COMPLEMENT BINARY
+            byte[] IF3BIT = { 0x1, 0x3, 0x5, 0x7, 0xff, 0xfd, 0xfb, 0xf9 };//SIGN/MAGNITUDE
+            //用一个bulkout复位清空DDR3缓存
+            //BulkOut.XferData(ref buf, ref len);
+            //Thread.Sleep(100);
+
+            int[] flags = new int[] { 1, 1, 1, 1, 1, 1, 1, 1 };
+            int rawdata = 0;
+            byte binI, binQ;
+
+            BinaryWriter[] bwt = new BinaryWriter[8];//创建了一个空数组
+            FileStream[] fwt = new FileStream[8];//创建了一个空数组
+            string[] fullpatht = new string[8];//创建了一个空数组
+            for (int i = 1; i <= 8; i++)
+            {
+                if (flags[i - 1] == 1)
+                {
+                    string path = "G:\\FastData\\IF_Test\\";// filePath;
+                    string name = fileName +"_" + Convert.ToString(i);
+                    fullpatht[i - 1] = path + name + ".bin"; //保存文件完整路径
+                    fwt[i - 1] = new FileStream(fullpatht[i - 1], FileMode.Create);
+                    bwt[i - 1] = new BinaryWriter(fwt[i - 1]);
+                }
+            }
+
+            try
+            {
+                while (k++ < kmax && runflag == true) //while (BulkIn != null && k++ < kmax && runflag == true)
+                {                    
+                                        
+                    rawdata = br.ReadInt32();
+                    //bw.Write(buf, 0, len);
+                    //if ((k % (kmax / 100)) == 0) progressBar1.Value = k;
+                    
+
+                    for (int i = 1; i <= 8; i++)
+                    {
+                        if (flags[i - 1] == 1)
+                        {
+                            //int length = len / 16;
+                            //BulkIn.XferData(ref buf, ref len);
+                            switch (i)
+                            {
+                                case 1:
+                                    //for (int j = 0; j < length; j++)
+                                    //{
+                                    //    bufin[j * 8] = IF2BIT[(buf[j * 16] >> 2) & 0x03];
+                                    //    bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 4] >> 2) & 0x03];
+                                    //    bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 8] >> 2) & 0x03];
+                                    //    bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 12] >> 2) & 0x03];
+
+                                    //    bufin[j * 8 + 1] = IF2BIT[(buf[j * 16] >> 0) & 0x03];
+                                    //    bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 4] >> 0) & 0x03];
+                                    //    bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 8] >> 0) & 0x03];
+                                    //    bufin[j * 8 + 7] = IF2BIT[(buf[j * 16 + 12] >> 0) & 0x03];
+                                    //}
+
+                                    //bwt[i - 1].Write(bufin, 0, length * 8);
+                                    //if ((k % (kmax / 100)) == 0) progressBar1.Value = k;
+                                    //bw.Close();
+                                    //fw.Close();
+
+                                    binI = IF2BIT[(rawdata >> 2) & 0x03];
+                                    binQ = IF2BIT[(rawdata >> 0) & 0x03];
+                                    bwt[i - 1].Write(binI);
+                                    bwt[i - 1].Write(binQ);
+                                    break;
+                                case 2:
+                                    //for (int j = 0; j < length; j++)
+                                    //{
+                                    //    bufin[j * 8] = IF2BIT[(buf[j * 16] >> 2) & 0x03];
+                                    //    bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 4] >> 2) & 0x03];
+                                    //    bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 8] >> 2) & 0x03];
+                                    //    bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 12] >> 2) & 0x03];
+
+                                    //    bufin[j * 8 + 1] = IF2BIT[(buf[j * 16] >> 0) & 0x03];
+                                    //    bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 4] >> 0) & 0x03];
+                                    //    bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 8] >> 0) & 0x03];
+                                    //    bufin[j * 8 + 7] = IF2BIT[(buf[j * 16 + 12] >> 0) & 0x03];
+                                    //}
+                                    //bwt[i - 1].Write(bufin, 0, length * 8);
+                                    //if ((k % (kmax / 100)) == 0) progressBar1.Value = k;
+                                    //bw.Close();
+                                    //fw.Close();
+                                    binI = IF2BIT[(rawdata >> 6) & 0x03];
+                                    binQ = IF2BIT[(rawdata >> 4) & 0x03];
+                                    bwt[i - 1].Write(binI);
+                                    bwt[i - 1].Write(binQ);
+                                    break;
+                                case 3:
+                                    //for (int j = 0; j < length; j++)
+                                    //{
+                                    //    bufin[j * 8] = IF2BIT[(buf[j * 16 + 1] >> 2) & 0x03];
+                                    //    bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 5] >> 2) & 0x03];
+                                    //    bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 9] >> 2) & 0x03];
+                                    //    bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 13] >> 2) & 0x03];
+
+                                    //    bufin[j * 8 + 1] = IF2BIT[(buf[j * 16 + 1] >> 0) & 0x03];
+                                    //    bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 5] >> 0) & 0x03];
+                                    //    bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 9] >> 0) & 0x03];
+                                    //    bufin[j * 8 + 7] = IF2BIT[(buf[j * 16 + 13] >> 0) & 0x03];
+                                    //}
+                                    //bwt[i - 1].Write(bufin, 0, length * 8);
+                                    //if ((k % (kmax / 100)) == 0) progressBar1.Value = k;
+                                    //bw.Close();
+                                    //fw.Close();
+                                    binI = IF2BIT[(rawdata >> 10) & 0x03];
+                                    binQ = IF2BIT[(rawdata >> 8) & 0x03];
+                                    bwt[i - 1].Write(binI);
+                                    bwt[i - 1].Write(binQ);
+                                    break;
+                                case 4:
+                                    //for (int j = 0; j < length; j++)
+                                    //{
+                                    //    bufin[j * 8] = IF2BIT[(buf[j * 16 + 1] >> 6) & 0x03];
+                                    //    bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 5] >> 6) & 0x03];
+                                    //    bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 9] >> 6) & 0x03];
+                                    //    bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 13] >> 6) & 0x03];
+
+                                    //    bufin[j * 8 + 1] = IF2BIT[(buf[j * 16 + 1] >> 4) & 0x03];
+                                    //    bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 5] >> 4) & 0x03];
+                                    //    bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 9] >> 4) & 0x03];
+                                    //    bufin[j * 8 + 7] = IF2BIT[(buf[j * 16 + 13] >> 4) & 0x03];
+                                    //}
+                                    //bwt[i - 1].Write(bufin, 0, length * 8);
+                                    //if ((k % (kmax / 100)) == 0) progressBar1.Value = k;
+                                    //bw.Close();
+                                    //fw.Close();
+                                    binI = IF2BIT[(rawdata >> 14) & 0x03];
+                                    binQ = IF2BIT[(rawdata >> 12) & 0x03];
+                                    bwt[i - 1].Write(binI);
+                                    bwt[i - 1].Write(binQ);
+                                    break;
+                                case 5:
+                                    //for (int j = 0; j < length; j++)
+                                    //{
+                                    //    bufin[j * 8] = IF2BIT[(buf[j * 16 + 2] >> 2) & 0x03];
+                                    //    bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 6] >> 2) & 0x03];
+                                    //    bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 10] >> 2) & 0x03];
+                                    //    bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 14] >> 2) & 0x03];
+
+                                    //    bufin[j * 8 + 1] = IF2BIT[(buf[j * 16 + 2] >> 0) & 0x03];
+                                    //    bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 6] >> 0) & 0x03];
+                                    //    bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 10] >> 0) & 0x03];
+                                    //    bufin[j * 8 + 7] = IF2BIT[(buf[j * 16 + 14] >> 0) & 0x03];
+                                    //}
+                                    //bwt[i - 1].Write(bufin, 0, length * 8);
+                                    //if ((k % (kmax / 100)) == 0) progressBar1.Value = k;
+                                    //bw.Close();
+                                    //fw.Close();
+                                    binI = IF2BIT[(rawdata >> 18) & 0x03];
+                                    binQ = IF2BIT[(rawdata >> 16) & 0x03];
+                                    bwt[i - 1].Write(binI);
+                                    bwt[i - 1].Write(binQ);
+                                    break;
+                                case 6:
+                                    //for (int j = 0; j < length; j++)
+                                    //{
+                                    //    bufin[j * 8] = IF2BIT[(buf[j * 16 + 2] >> 6) & 0x03];
+                                    //    bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 6] >> 6) & 0x03];
+                                    //    bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 10] >> 6) & 0x03];
+                                    //    bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 14] >> 6) & 0x03];
+
+                                    //    bufin[j * 8 + 1] = IF2BIT[(buf[j * 16] >> 4) & 0x03];
+                                    //    bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 4] >> 4) & 0x03];
+                                    //    bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 8] >> 4) & 0x03];
+                                    //    bufin[j * 8 + 7] = IF2BIT[(buf[j * 16 + 12] >> 4) & 0x03];
+                                    //}
+                                    //bwt[i - 1].Write(bufin, 0, length * 8);
+                                    //if ((k % (kmax / 100)) == 0) progressBar1.Value = k;
+                                    //bw.Close();
+                                    //fw.Close();
+                                    binI = IF2BIT[(rawdata >> 22) & 0x03];
+                                    binQ = IF2BIT[(rawdata >> 20) & 0x03];
+                                    bwt[i - 1].Write(binI);
+                                    bwt[i - 1].Write(binQ);
+                                    break;
+                                case 7:
+                                    //for (int j = 0; j < length; j++)
+                                    //{
+                                    //    bufin[j * 8] = IF2BIT[(buf[j * 16 + 3] >> 2) & 0x03];
+                                    //    bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 7] >> 2) & 0x03];
+                                    //    bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 11] >> 2) & 0x03];
+                                    //    bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 15] >> 2) & 0x03];
+
+                                    //    bufin[j * 8 + 1] = IF2BIT[(buf[j * 16 + 3] >> 0) & 0x03];
+                                    //    bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 7] >> 0) & 0x03];
+                                    //    bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 11] >> 0) & 0x03];
+                                    //    bufin[j * 8 + 7] = IF2BIT[(buf[j * 16 + 15] >> 0) & 0x03];
+                                    //}
+                                    //bwt[i - 1].Write(bufin, 0, length * 8);
+                                    //if ((k % (kmax / 100)) == 0) progressBar1.Value = k;
+                                    //bw.Close();
+                                    //fw.Close();
+                                    binI = IF2BIT[(rawdata >> 26) & 0x03];
+                                    binQ = IF2BIT[(rawdata >> 24) & 0x03];
+                                    bwt[i - 1].Write(binI);
+                                    bwt[i - 1].Write(binQ);
+                                    break;
+                                case 8:
+                                    //for (int j = 0; j < length; j++)
+                                    //{
+                                    //    bufin[j * 8] = IF2BIT[(buf[j * 16 + 3] >> 6) & 0x03];
+                                    //    bufin[j * 8 + 2] = IF2BIT[(buf[j * 16 + 7] >> 6) & 0x03];
+                                    //    bufin[j * 8 + 4] = IF2BIT[(buf[j * 16 + 11] >> 6) & 0x03];
+                                    //    bufin[j * 8 + 6] = IF2BIT[(buf[j * 16 + 15] >> 6) & 0x03];
+
+                                    //    bufin[j * 8 + 1] = IF2BIT[(buf[j * 16 + 3] >> 4) & 0x03];
+                                    //    bufin[j * 8 + 3] = IF2BIT[(buf[j * 16 + 7] >> 4) & 0x03];
+                                    //    bufin[j * 8 + 5] = IF2BIT[(buf[j * 16 + 11] >> 4) & 0x03];
+                                    //    bufin[j * 8 + 7] = IF2BIT[(buf[j * 16 + 15] >> 4) & 0x03];
+                                    //}
+                                    //bwt[i - 1].Write(bufin, 0, length * 8);
+                                    //if ((k % (kmax / 100)) == 0) progressBar1.Value = k;
+                                    //bw.Close();
+                                    //fw.Close();
+                                    binI = IF2BIT[(rawdata >> 30) & 0x03];
+                                    binQ = IF2BIT[(rawdata >> 28) & 0x03];
+                                    bwt[i - 1].Write(binI);
+                                    bwt[i - 1].Write(binQ);
+                                    break;
+                                default:
+                                    break;
+
+                            }
+                        }
+
+                    }
+
+                    if ((k % (kmax / 100)) == 0) progressBar2.Value = k;
+                                                           
+
+                    //Console.WriteLine("{0},{1},{2},{2}", cha, num, doub, str);
+                }
+            }
+            catch (EndOfStreamException e)
+            {
+                //Console.WriteLine(e.Message);
+                //Console.WriteLine("已经读到末尾");
+                textBox1.AppendText("已经读到末尾!\r\n");
+            }
+            finally
+            {
+                for (int i = 1; i <= 8; i++)
+                {
+                    if (flags[i - 1] == 1)
+                    {
+                        bwt[i - 1].Close();
+                        fwt[i - 1].Close();
+                    }
+                }
+                //Console.ReadKey();
+            }
+
+            progressBar2.Value = kmax;
+            savefileok = true;
+            br.Close();
+            fr.Close();
+            if (savefileok)
+                textBox1.AppendText("save file ok!\r\n");
+            else
+                textBox1.AppendText("save file error!\r\n");
+                                   
         }
     }
 }
