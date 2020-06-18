@@ -126,7 +126,7 @@ namespace usb20in
             FileStream fw;
             if (comboBox3.Text.Contains("INT8") || comboBox3.Text == "RAWDATA")
 
-                fw = new FileStream("E:\\FastData\\IF_Test\\usbdata_n.bin", FileMode.Create);//C:\\MATLAB7\\work\\usbdata.bin//I:\\prom\\work\\
+                fw = new FileStream("E:\\FastData\\IF\\usbdata_n.bin", FileMode.Create);//C:\\MATLAB7\\work\\usbdata.bin//I:\\prom\\work\\
             else
                 fw = new FileStream("E:\\data\\usbdataB3I_16M369X4_1.dat", FileMode.Create);
             BinaryWriter bw;
@@ -1345,6 +1345,11 @@ namespace usb20in
             else
                 textBox1.AppendText("save file error!\r\n");
                                    
+        }
+
+        private void groupBox7_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }
