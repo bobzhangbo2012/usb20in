@@ -23,7 +23,6 @@ F:\实验室\GNSS接收机\usb20in\usb20in\obj\x64\Debug\usb20in.pdb
 F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\bin\x64\Debug\usb20in.exe.config
 F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\bin\x64\Debug\usb20in.exe
 F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\bin\x64\Debug\usb20in.pdb
-F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\bin\x64\Debug\CyUSB.dll
 F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\obj\x64\Debug\usb20in.csprojAssemblyReference.cache
 F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\obj\x64\Debug\usb20in.Form1.resources
 F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\obj\x64\Debug\usb20in.Properties.Resources.resources
@@ -31,3 +30,5 @@ F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\obj\x64\Debug\usb20in.csproj.Gen
 F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\obj\x64\Debug\usb20in.csproj.CopyComplete
 F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\obj\x64\Debug\usb20in.exe
 F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\obj\x64\Debug\usb20in.pdb
+F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\obj\x64\Debug\usb20in.csproj.CoreCompileInputs.cache
+F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\bin\x64\Debug\CyUSB.dll
