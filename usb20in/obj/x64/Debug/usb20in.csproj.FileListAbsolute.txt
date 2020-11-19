@@ -30,5 +30,4 @@ F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\obj\x64\Debug\usb20in.csproj.Gen
 F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\obj\x64\Debug\usb20in.csproj.CopyComplete
 F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\obj\x64\Debug\usb20in.exe
 F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\obj\x64\Debug\usb20in.pdb
-F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\obj\x64\Debug\usb20in.csproj.CoreCompileInputs.cache
 F:\OneDrive - UNSW\codeProjects\usb20in\usb20in\bin\x64\Debug\CyUSB.dll

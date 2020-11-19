@@ -1099,7 +1099,7 @@ namespace usb20in
             {
                 if (flags[i - 1] == 1)
                 {
-                    string path = "G:\\FastData\\IF_Test\\";// filePath;
+                    string path = "E:\\FastData\\IF_Test\\";// filePath;
                     string name = fileName +"_" + Convert.ToString(i);
                     fullpatht[i - 1] = path + name + ".bin"; //保存文件完整路径
                     fwt[i - 1] = new FileStream(fullpatht[i - 1], FileMode.Create);
